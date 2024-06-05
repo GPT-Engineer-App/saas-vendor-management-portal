@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Text, VStack, HStack, Button, Table, Thead, Tbody, Tr, Th, Td, Input, FormControl, FormLabel, IconButton, useToast } from "@chakra-ui/react";
+import { Container, Text, VStack, HStack, Button, Table, Thead, Tbody, Tr, Th, Td, Input, FormControl, FormLabel, IconButton, useToast, SimpleGrid } from "@chakra-ui/react";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 
 const Index = () => {
@@ -67,13 +67,29 @@ const Index = () => {
     });
   };
 
+  const handleView = (index) => {
+    const vendor = vendors[index];
+    toast({
+      title: "Vendor Details",
+      description: `Vendor Number: ${vendor.vendorNumber}\nVendor Name: ${vendor.vendorName}\nContact Name: ${vendor.contactName}\nContact Email: ${vendor.contactEmail}`,
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
+  const handleEdit = (index) => {
+    const vendor = vendors[index];
+    setForm(vendor);
+  };
+
   return (
     <Container maxW="container.xl" py={10}>
       <VStack spacing={8}>
         <Text fontSize="4xl" fontWeight="bold">
           Vendor Management
         </Text>
-        <VStack spacing={4} w="100%">
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} w="100%">
           <FormControl id="vendorNumber" isRequired>
             <FormLabel>Vendor Number</FormLabel>
             <Input name="vendorNumber" value={form.vendorNumber} onChange={handleChange} maxLength={20} />
@@ -133,7 +149,7 @@ const Index = () => {
           <Button colorScheme="teal" onClick={handleSubmit}>
             Add Vendor
           </Button>
-        </VStack>
+        </SimpleGrid>
         <Table variant="simple" w="100%">
           <Thead>
             <Tr>
